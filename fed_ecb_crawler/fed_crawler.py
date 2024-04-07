@@ -3,8 +3,6 @@ import requests
 from bs4 import BeautifulSoup, Tag
 import re
 import os
-
-# import requests
 from datetime import datetime
 
 
@@ -125,8 +123,7 @@ class FEDCrawler(CrawlerBase):
                     articles.append(self._parse_a_b(link))
         return articles
 
-    def _get_article_list(self):
-        url = f"{self._base_url}/monetarypolicy/fomccalendars.htm"
+    def _get_article_list(self, url: str):
         response = requests.get(url)
 
         if response.status_code == 200:
@@ -144,7 +141,8 @@ class FEDCrawler(CrawlerBase):
         self._start_date = self._get_month_range(start_date)[0]
         self._end_date = self._get_month_range(end_date)[1]
 
-        article_list = self._get_article_list()
+        url = f"{self._base_url}/monetarypolicy/fomccalendars.htm"
+        article_list = self._get_article_list(url)
         articles = self._get_articles_from_list(article_list)
         articles = self._group_articles(articles)
         self._save(articles)

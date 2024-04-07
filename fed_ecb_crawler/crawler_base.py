@@ -101,7 +101,7 @@ class CrawlerBase(ABC):
         pass
 
     @abstractmethod
-    def _get_article_list(self):
+    def _get_article_list(self, url: str):
         pass
 
     @abstractmethod
